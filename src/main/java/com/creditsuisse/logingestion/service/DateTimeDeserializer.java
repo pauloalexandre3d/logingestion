@@ -1,4 +1,4 @@
-package com.creditsuisse.logingestion;
+package com.creditsuisse.logingestion.service;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

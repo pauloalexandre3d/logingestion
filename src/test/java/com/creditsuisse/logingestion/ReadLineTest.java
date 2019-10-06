@@ -1,5 +1,8 @@
 package com.creditsuisse.logingestion;
 
+import com.creditsuisse.logingestion.config.SpringBatchConfig;
+import com.creditsuisse.logingestion.domain.EventLog;
+import com.creditsuisse.logingestion.service.EventReader;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.batch.core.StepExecution;

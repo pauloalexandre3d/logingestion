@@ -1,5 +1,6 @@
-package com.creditsuisse.logingestion;
+package com.creditsuisse.logingestion.service;
 
+import com.creditsuisse.logingestion.domain.EventLog;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
