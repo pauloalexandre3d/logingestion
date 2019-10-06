@@ -2,11 +2,17 @@ plugins {
 	id 'org.springframework.boot' version '2.1.8.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
+	id 'jacoco'
 }
 
 group = 'com.credit-suisse'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+
+jacoco {
+	toolVersion = "0.8.4"
+	reportsDir = file("$buildDir/customJacocoReportDir")
+}
 
 configurations {
 	developmentOnly
@@ -20,6 +26,14 @@ configurations {
 
 repositories {
 	mavenCentral()
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled false
+		csv.enabled false
+		html.destination file("${buildDir}/jacocoHtml")
+	}
 }
 
 dependencies {

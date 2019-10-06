@@ -1,9 +1,6 @@
 package com.creditsuisse.logingestion.service;
 
 import com.creditsuisse.logingestion.domain.EventLog;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.slf4j.Logger;
@@ -25,8 +22,6 @@ public class EventReader<T> implements ItemReader<EventLog>, StepExecutionListen
 
     private BufferedReader reader;
 
-    private ObjectMapper mapper = new ObjectMapper();
-
     @Override
     public void beforeStep(StepExecution stepExecution) {
 
@@ -43,10 +38,7 @@ public class EventReader<T> implements ItemReader<EventLog>, StepExecutionListen
             e.printStackTrace();
         }
 
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
-
-        logger.debug("Line Reader initialized.");
+        logger.debug("Event Reader initialized.");
     }
 
     @Override
@@ -56,7 +48,7 @@ public class EventReader<T> implements ItemReader<EventLog>, StepExecutionListen
         } catch (IOException e) {
             logger.error("Error while closing reader.");
         }
-        logger.debug("Line Reader ended.");
+        logger.debug("Event Reader ended.");
         return ExitStatus.COMPLETED;
     }
 

@@ -8,24 +8,20 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.test.MetaDataInstanceFactory;
-import org.springframework.batch.test.StepScopeTestExecutionListener;
+import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringBatchConfig.class)
-@TestExecutionListeners( { DependencyInjectionTestExecutionListener.class,
-        StepScopeTestExecutionListener.class })
+@SpringBatchTest
 public class WriterEventTest {
 
     @Autowired
@@ -34,13 +30,12 @@ public class WriterEventTest {
     @Autowired
     private EventsLog eventsLog;
 
-    public StepExecution getStepExecution() throws IOException {
-        StepExecution execution = MetaDataInstanceFactory.createStepExecution();
-        return execution;
+    public StepExecution getStepExecution() {
+        return MetaDataInstanceFactory.createStepExecution();
     }
 
     @Test
-    public void testWriter() throws Exception {
+    public void testShouldAssertTheWriterSaveEventsInDatabase() {
         itemWriter.beforeStep(getStepExecution());
 
         List<EventLog> listEvents = new ArrayList<>();

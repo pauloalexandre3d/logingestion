@@ -7,12 +7,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.test.MetaDataInstanceFactory;
-import org.springframework.batch.test.StepScopeTestExecutionListener;
+import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import java.io.IOException;
 
@@ -21,8 +19,7 @@ import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringBatchConfig.class)
-@TestExecutionListeners( { DependencyInjectionTestExecutionListener.class,
-        StepScopeTestExecutionListener.class })
+@SpringBatchTest
 public class ReadEventTest {
 
     @Autowired
@@ -37,7 +34,7 @@ public class ReadEventTest {
     }
 
     @Test
-    public void testReader() throws Exception {
+    public void testShouldAssertReaderGetEventLogObjectFromFile() throws Exception {
         itemReader.beforeStep(getStepExecution());
         EventLog eventLog = itemReader.read();
         assertThat(eventLog, not(nullValue()));
