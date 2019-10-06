@@ -16,6 +16,7 @@ import java.util.Optional;
 
 public class EventWriter implements ItemWriter<EventLog>, StepExecutionListener {
 
+    private static final int LIMIT_LONG_DURATION = 4;
     private final Logger logger = LoggerFactory.getLogger(EventWriter.class);
 
     @Autowired
@@ -39,8 +40,8 @@ public class EventWriter implements ItemWriter<EventLog>, StepExecutionListener 
             Optional<EventLog> eventLogSaved = eventsLog.findById(event.getId());
             if (eventLogSaved.isPresent()) {
                 long duration = eventLogSaved.get().getTimestamp().until(event.getTimestamp(), ChronoUnit.MILLIS);
-                duration = (duration < 0 ? -duration : duration);
-                eventLogSaved.get().setLongDuration(Boolean.TRUE);
+                if ((duration < 0 ? -duration : duration) > LIMIT_LONG_DURATION)
+                    eventLogSaved.get().setLongDuration(Boolean.TRUE);
             } else {
                 eventsLog.save(event);
             }

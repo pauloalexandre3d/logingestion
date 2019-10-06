@@ -23,19 +23,18 @@ import static org.hamcrest.Matchers.*;
 @ContextConfiguration(classes = SpringBatchConfig.class)
 @TestExecutionListeners( { DependencyInjectionTestExecutionListener.class,
         StepScopeTestExecutionListener.class })
-public class ReadLineTest {
+public class ReadEventTest {
+
+    @Autowired
+    private EventReader<EventLog> itemReader;
 
     public StepExecution getStepExecution() throws IOException {
         Fixture.getInstance().copyFile();
 
         StepExecution execution = MetaDataInstanceFactory.createStepExecution();
-
         execution.getExecutionContext().putString("logFilePath", System.getProperty("java.io.tmpdir").concat("/logfile.txt"));
         return execution;
     }
-    
-    @Autowired
-    private EventReader<EventLog> itemReader;
 
     @Test
     public void testReader() throws Exception {

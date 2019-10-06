@@ -92,7 +92,6 @@ public class SpringBatchConfig {
     @Bean
     public JobRepository jobRepository() throws Exception {
         MapJobRepositoryFactoryBean factory = new MapJobRepositoryFactoryBean();
-//        factory.setTransactionManager(transactionManager());
         return factory.getObject();
     }
 
@@ -115,7 +114,7 @@ public class SpringBatchConfig {
 
     @Bean
     protected Step processLines(ItemReader<EventLog> reader, ItemWriter<EventLog> writer) {
-        return steps.get("processLines").<EventLog, EventLog> chunk(3)
+        return steps.get("processLines").<EventLog, EventLog> chunk(2)
                 .reader(reader)
                 .writer(writer)
                 .readerIsTransactionalQueue()
