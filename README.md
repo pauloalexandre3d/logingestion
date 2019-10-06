@@ -33,6 +33,7 @@ Go to root folder and type on your terminal:
 ## UML diagram
 
 Spring Batch uses a 'Chunk Oriented' processing style within its most common implementation.
+
 ```mermaid
 sequenceDiagram
 Step ->> ItemReader: read()
